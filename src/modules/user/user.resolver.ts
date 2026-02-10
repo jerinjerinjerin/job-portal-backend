@@ -129,6 +129,35 @@ async logout(
   }
 }
 
+async changeRole (req: Request, res: Response, next: NextFunction) {
+  try {
+    let userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required",
+      });
+    }
+
+    
+    const { newRole } = req.body;
+
+    if (!["candidate", "employer"].includes(newRole)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role. Must be 'candidate' or 'employer'.",
+      });
+    }
+
+    const result = await userService.changeUserRole(userId, newRole);
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 }
 

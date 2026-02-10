@@ -6,6 +6,7 @@ import Skill from "./skills";
 import Application from "./application";
 import JobSkill from "./jobSkill";
 import ApplicationSkill from "./applicationSkill";
+import UserSkill from "./userSkills";
 
 
 
@@ -87,6 +88,20 @@ Skill.belongsToMany(Application, {
   foreignKey: "skillId",
   as: "applications",
 });
+
+
+User.belongsToMany(Skill, {
+  through: UserSkill,
+  foreignKey: "userId",
+  as: "skills",
+});
+
+Skill.belongsToMany(User, {
+  through: UserSkill,
+  foreignKey: "skillId",
+  as: "users",
+});
+
 
 
 

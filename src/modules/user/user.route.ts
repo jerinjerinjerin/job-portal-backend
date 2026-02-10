@@ -14,5 +14,7 @@ router.get("/current", authMiddleware, userResolver.currentUser);
 
 router.post("/logout",authMiddleware, userResolver.logout);
 
+router.post("/change-role", authMiddleware, userResolver.changeRole);
+
 
 export default router;

@@ -2,7 +2,11 @@ import bcrypt from "bcrypt";
 
 import UserRepository from "./user.repo";
 import { CreateUserInput, LoginInput } from "./user.validation";
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../../commen/utils/jwt";
+import { 
+  generateAccessToken, 
+  generateRefreshToken, 
+  verifyRefreshToken 
+} from "../../commen/utils/jwt";
 
 class UserService {
   async createUser(data: CreateUserInput) {
@@ -71,7 +75,6 @@ class UserService {
 
   async refreshToken(token: string) {
 
-    console.log("Received refresh token:", token);
 
   if (!token) {
     throw new Error("Refresh token required");
@@ -122,6 +125,16 @@ async logout(userId: string) {
   await UserRepository.removeRefreshToken(
     userId
   );
+}
+
+async changeUserRole(userId: string, newRole: "candidate" | "employer") {
+  const result = await UserRepository.changeRole(userId, newRole);
+
+  return {
+    data: result,
+    success: true,
+    message: "User role updated successfully",
+  };
 }
 }
 

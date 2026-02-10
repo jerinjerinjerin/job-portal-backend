@@ -39,6 +39,15 @@ class UserRepository {
       { where: { id: userId } }
     );
   }
+
+  async changeRole(userId: string, newRole: "candidate" | "employer") {
+    await User.update(
+      { role: newRole },
+      { where: { id: userId } }
+    );
+  }
 }
+
+
 
 export default new UserRepository();
